@@ -187,7 +187,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         main_section_layout.addLayout(button_layout)
 
-        self.photo_slideshow = PhotoSlideshow("/Users/clementine/Desktop/proj/V5/images")  # Dossier contenant les images
+        self.photo_slideshow = PhotoSlideshow("images")  # Dossier contenant les images
         main_section_layout.addWidget(self.photo_slideshow, alignment=QtCore.Qt.AlignCenter)
 
         # Section de conversation

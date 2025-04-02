@@ -89,7 +89,7 @@ class MusicWindow(QtWidgets.QDialog):
         """
         Charge les fichiers musicaux depuis le dossier spécifié et les ajoute à la liste de lecture.
         """
-        music_folder = "/Users/clementine/Desktop/proj/V5/musique"
+        music_folder = "musique"
         if not os.path.exists(music_folder):
             QtWidgets.QMessageBox.critical(self, "Erreur", "Le dossier de musique spécifié n'existe pas.")
             return
