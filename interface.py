@@ -220,7 +220,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Photo de la personne
         photo_label = QtWidgets.QLabel()
-        photo = QtGui.QPixmap("images/image_test.png")
+        photo = QtGui.QPixmap("image_test.png")
         photo = photo.scaled(100, 100, QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
         photo_label.setPixmap(photo)
         photo_label.setAlignment(QtCore.Qt.AlignCenter)
