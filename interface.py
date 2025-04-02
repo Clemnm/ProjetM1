@@ -40,7 +40,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Définition des propriétés de la fenêtre principale
         self.setWindowTitle("Med Board")
-        self.resize(1200, 800)  # Agrandir la fenêtre principale
+        self.resize(1200, 800)
         self.setStyleSheet("background-color:rgb(255, 255, 255);")
 
         # Initialisation de l'interface utilisateur
@@ -63,25 +63,23 @@ class MainWindow(QtWidgets.QMainWindow):
         """
         main_widget = QtWidgets.QWidget()
         self.setCentralWidget(main_widget)
-        main_layout = QtWidgets.QHBoxLayout(main_widget)  # Disposition horizontale
+        main_layout = QtWidgets.QHBoxLayout(main_widget)
 
         # Barre latérale gauche ----------------------------------------------------------------------------------------------------------
         sidebar_left = QtWidgets.QFrame()
-        sidebar_left.setStyleSheet("border: none;")  # Pas de fond global
+        sidebar_left.setStyleSheet("border: none;")
         sidebar_left.setFixedWidth(300)
         sidebar_layout = QtWidgets.QVBoxLayout(sidebar_left)
 
-        # Ajoute un espace flexible en haut
         sidebar_layout.addSpacerItem(QtWidgets.QSpacerItem(20, 30, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
 
         # Bloc supérieur "Med Board"
         med_board_widget = QtWidgets.QWidget()
-        med_board_widget.setFixedHeight(310)  # Ajuste la hauteur du bloc
+        med_board_widget.setFixedHeight(310)
         med_board_widget.setStyleSheet("background-color: #cafafa; border-radius: 15px; padding: 10px;")
 
         med_board_layout = QtWidgets.QVBoxLayout(med_board_widget)
 
-        # Titre "Med Board"
         med_board_title = QtWidgets.QLabel("Med Board 🩺 ")
         med_board_title.setFont(QtGui.QFont('Helvetica', 14, QtGui.QFont.Bold))
         med_board_layout.addWidget(med_board_title)
@@ -97,13 +95,13 @@ class MainWindow(QtWidgets.QMainWindow):
             "- envoyer un appel en cas d'urgence."
         )
         med_board_description.setFont(QtGui.QFont('Helvetica', 14))
-        med_board_description.setReadOnly(True)  # Rend la zone de texte non modifiable
+        med_board_description.setReadOnly(True)
         med_board_description.setStyleSheet("background-color: transparent; border: none; color: black;")
         med_board_layout.addWidget(med_board_description)
 
         sidebar_layout.addWidget(med_board_widget)
 
-        # Ajout du calendrier dans la barre latérale
+        # Calendrier
         self.calendar = QtWidgets.QCalendarWidget()
         self.calendar.setGridVisible(True)
         self.calendar.setStyleSheet("background-color: #FFFFFF; border-radius: 15px;")
@@ -117,15 +115,10 @@ class MainWindow(QtWidgets.QMainWindow):
         emergency_btn.setFixedSize(275, 150)  # Taille ajustée pour le bouton
         sidebar_layout.addWidget(emergency_btn)
 
-
-
-        # Connexion du clic du bouton à la fonction
         emergency_btn.clicked.connect(self.on_emergency_button_clicked)
 
-        # Ajoute un espace flexible en bas
         sidebar_layout.addStretch()
 
-        # Ajoute la barre latérale au layout principal
         main_layout.addWidget(sidebar_left)
 
         # Section principale -----------------------------------------------------------------------------------------------------
@@ -143,12 +136,11 @@ class MainWindow(QtWidgets.QMainWindow):
         header_layout.setContentsMargins(0, 0, 0, 0)
         header_layout.setSpacing(10)
 
-        # Message de bienvenue
         greeting = QtWidgets.QLabel("Bonjour et bienvenue !")
         greeting.setFont(QtGui.QFont('Helvetica', 20, QtGui.QFont.Bold))
         header_layout.addWidget(greeting)
 
-        # Labels pour l'heure et la date actuelles
+        # Heure et date
         self.time_label = QtWidgets.QLabel("", self)
         self.time_label.setFont(QtGui.QFont('Helvetica', 18))
         self.time_label.setAlignment(QtCore.Qt.AlignCenter)
@@ -160,7 +152,6 @@ class MainWindow(QtWidgets.QMainWindow):
         header_layout.addWidget(self.time_label)
         header_layout.addWidget(self.date_label)
 
-        # Timer pour mettre à jour l'heure toutes les secondes
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_time)
         self.timer.start(1000)
@@ -168,7 +159,6 @@ class MainWindow(QtWidgets.QMainWindow):
         header_layout.addStretch()
         main_section_layout.addWidget(header)
 
-        # Mise en page des boutons
         button_layout = QtWidgets.QHBoxLayout()
 
         # Bouton Musique
@@ -197,10 +187,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         main_section_layout.addLayout(button_layout)
 
-        # Ajout du diaporama d'images
         self.photo_slideshow = PhotoSlideshow("/Users/clementine/Desktop/proj/V5/images")  # Dossier contenant les images
         main_section_layout.addWidget(self.photo_slideshow, alignment=QtCore.Qt.AlignCenter)
-        #main_section_layout.addStretch()
 
         # Section de conversation
         self.title_label = QtWidgets.QLabel("Conversation")
@@ -213,41 +201,36 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # Barre latérale droite -----------------------------------------------------------------------------------------------------
         sidebar_right = QtWidgets.QFrame()
-        sidebar_right.setFixedWidth(275)  # Fixe la largeur de la barre latérale droite
+        sidebar_right.setFixedWidth(275)
 
-        # Disposition verticale des éléments dans la barre latérale droite
         sidebar_right_layout = QtWidgets.QVBoxLayout(sidebar_right)
         sidebar_right_layout.addSpacerItem(QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
 
-        # Widget global contenant toutes les informations (photo, infos patient, groupe sanguin, taille, poids)
+        # Informations patient 
         patient_info_widget = QtWidgets.QWidget()
         patient_info_widget.setStyleSheet("background-color: #cafafa; border-radius: 15px; padding: 10px;")
 
-        # Layout principal du widget patient
         patient_info_layout = QtWidgets.QVBoxLayout(patient_info_widget)
         patient_info_layout.setSpacing(5)  # Réduit l'espace entre les éléments
         patient_info_layout.setContentsMargins(10, 10, 10, 10)  # Marges autour du contenu
 
-        # Titre "Informations patients"
         patient_info_title = QtWidgets.QLabel("Informations patients")
         patient_info_title.setFont(QtGui.QFont('Helvetica', 14, QtGui.QFont.Bold))
         patient_info_layout.addWidget(patient_info_title)
 
         # Photo de la personne
         photo_label = QtWidgets.QLabel()
-        photo = QtGui.QPixmap("/Users/clementine/Desktop/proj/image_test.png")  # Remplace par le chemin correct
+        photo = QtGui.QPixmap("images/image_test.png")
         photo = photo.scaled(100, 100, QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation)
         photo_label.setPixmap(photo)
         photo_label.setAlignment(QtCore.Qt.AlignCenter)
         patient_info_layout.addWidget(photo_label)
 
-        # Informations patient
         name_label = QtWidgets.QLabel("Nom Prénom: PATIENT Numéro 1")
         dob_label = QtWidgets.QLabel("Date de naissance: 12/04/1987")
         patient_info_layout.addWidget(name_label)
         patient_info_layout.addWidget(dob_label)
 
-        # Groupe sanguin, taille et poids
         blood_group_label = QtWidgets.QLabel("Groupe sanguin: B+")
         height_label = QtWidgets.QLabel("Taille: 182 cm")
         weight_label = QtWidgets.QLabel("Poids: 75 kg")
@@ -255,12 +238,11 @@ class MainWindow(QtWidgets.QMainWindow):
         patient_info_layout.addWidget(height_label)
         patient_info_layout.addWidget(weight_label)
 
-        # Ajouter le widget complet au layout de la barre latérale droite
         sidebar_right_layout.addWidget(patient_info_widget)
 
         # Bloc Check-up
         checkup_widget = QtWidgets.QWidget()
-        checkup_widget.setFixedHeight(155)  # Ajuste la hauteur du bloc
+        checkup_widget.setFixedHeight(155)
         checkup_widget.setStyleSheet("background-color: #cafafa; border-radius: 15px; padding: 10px;")
 
         checkup_block = QtWidgets.QVBoxLayout()
@@ -268,19 +250,17 @@ class MainWindow(QtWidgets.QMainWindow):
         checkup_title.setFont(QtGui.QFont('Helvetica', 14, QtGui.QFont.Bold))
         checkup_block.addWidget(checkup_title)
 
-        # Zone de texte (modifiable ou non)
         checkup_text = QtWidgets.QTextEdit()
         checkup_text.setPlainText("Médecin traitant : Dr Lemarchand\nDernier check-up réalisé : Sandra Gougena")
-        checkup_text.setReadOnly(True)  # Rend la zone de texte non modifiable
+        checkup_text.setReadOnly(True)
         checkup_block.addWidget(checkup_text)
 
-        # Ajouter le layout au widget Check-up
         checkup_widget.setLayout(checkup_block)
         sidebar_right_layout.addWidget(checkup_widget)
 
         # Bloc Préférences
         preferences_widget = QtWidgets.QWidget()
-        preferences_widget.setFixedHeight(130)  # Ajuste la hauteur du bloc
+        preferences_widget.setFixedHeight(130)
         preferences_widget.setStyleSheet("background-color: #cafafa; border-radius: 15px; padding: 10px;")
 
         preferences_block = QtWidgets.QVBoxLayout()
@@ -290,23 +270,20 @@ class MainWindow(QtWidgets.QMainWindow):
 
         preferences_text = QtWidgets.QTextEdit()
         preferences_text.setPlainText("Le patient aime sa température de bain à 38 °C")
-        preferences_text.setReadOnly(True)  # Rend la zone de texte non modifiable
+        preferences_text.setReadOnly(True)
         preferences_block.addWidget(preferences_text)
 
-        # Ajouter le layout au widget Préférences
         preferences_widget.setLayout(preferences_block)
         sidebar_right_layout.addWidget(preferences_widget)
 
-        # Ajout d'un espaceur en bas pour éviter que les widgets soient trop serrés
         sidebar_right_layout.addSpacerItem(QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
 
-        # Ajouter la barre latérale droite au layout principal
         main_layout.addWidget(sidebar_right)
 
         # Ajout des carrés de calibration -----------------------------------------------------------------------------------------------------
         self.corner_squares = CornerSquares(main_widget)
 
-    # Fonction qui sera appelée lors du clic
+    # Fonction qui sera appelée lors du clic sur appel d'urgence
     def on_emergency_button_clicked(self):
         if self.emergency_active:
             self.stop_emergency()
